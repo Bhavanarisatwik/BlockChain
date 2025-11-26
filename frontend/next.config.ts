@@ -2,19 +2,19 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  experimental: {
-    turbopack: false,
-  },
   webpack: (config, { isServer }) => {
     // Exclude problematic node modules from build
-    config.externals = config.externals || [];
-    
     if (isServer) {
-      config.externals.push('thread-stream');
+      config.externals = [...(config.externals || []), 'thread-stream', 'pino-transport'];
     }
 
+    // Ignore test files and unnecessary files in modules
+    config.resolve = config.resolve || {};
+    config.resolve.alias = config.resolve.alias || {};
+    
     return config;
   },
+  transpilePackages: ['@rainbow-me/rainbowkit', '@wagmi/connectors', 'viem'],
 };
 
 export default nextConfig;
