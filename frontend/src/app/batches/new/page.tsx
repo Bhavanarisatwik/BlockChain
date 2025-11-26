@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -22,7 +22,7 @@ interface Product {
   exists: boolean;
 }
 
-export default function NewBatchPage() {
+function NewBatchContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const preselectedProductId = searchParams.get('productId');
@@ -351,5 +351,29 @@ export default function NewBatchPage() {
 
       <Footer />
     </div>
+  );
+}
+
+// Loading fallback component
+function NewBatchLoading() {
+  return (
+    <div className="min-h-screen bg-[var(--background)]">
+      <Navbar />
+      <main className="pt-20 pb-12 px-4">
+        <div className="mx-auto max-w-2xl flex items-center justify-center min-h-[50vh]">
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--primary)]" />
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+// Export with Suspense wrapper
+export default function NewBatchPage() {
+  return (
+    <Suspense fallback={<NewBatchLoading />}>
+      <NewBatchContent />
+    </Suspense>
   );
 }
