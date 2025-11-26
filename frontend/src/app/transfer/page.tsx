@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -14,7 +14,7 @@ import { isAddress } from 'viem';
 import toast from 'react-hot-toast';
 import { formatNumber, truncateAddress } from '@/lib/utils';
 
-export default function TransferPage() {
+function TransferContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const preselectedBatchId = searchParams.get('batchId');
@@ -369,5 +369,29 @@ export default function TransferPage() {
 
       <Footer />
     </div>
+  );
+}
+
+// Loading fallback
+function TransferLoading() {
+  return (
+    <div className="min-h-screen bg-[var(--background)]">
+      <Navbar />
+      <main className="pt-20 pb-12 px-4">
+        <div className="mx-auto max-w-2xl flex items-center justify-center min-h-[50vh]">
+          <Loader2 className="h-8 w-8 animate-spin text-[var(--primary)]" />
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+// Export with Suspense wrapper
+export default function TransferPage() {
+  return (
+    <Suspense fallback={<TransferLoading />}>
+      <TransferContent />
+    </Suspense>
   );
 }
