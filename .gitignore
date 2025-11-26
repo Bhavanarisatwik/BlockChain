@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Testing
+coverage/
+coverage.json
+gas-report.txt
+
+# Hardhat
+cache/
+artifacts/
+typechain-types/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+build/
+out/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Frontend
+frontend/.next/
+frontend/out/
+frontend/node_modules/
+
+# Indexer
+indexer/node_modules/
+indexer/dist/
