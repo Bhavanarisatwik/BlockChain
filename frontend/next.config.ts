@@ -1,24 +1,41 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  
-  // Use empty turbopack config to silence the warning
-  // The app works fine without custom webpack config for production
-  turbopack: {},
-  
   // Transpile these packages for compatibility
   transpilePackages: ['@rainbow-me/rainbowkit', '@wagmi/connectors', 'viem'],
   
   // Disable strict mode for Web3 compatibility
   reactStrictMode: false,
   
-  // Ignore TypeScript/ESLint errors during build (optional, for faster deploys)
+  // Ignore TypeScript/ESLint errors during build
   typescript: {
     ignoreBuildErrors: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  
+  // Mark problematic packages as external for server
+  serverExternalPackages: ['pino', 'pino-pretty', 'thread-stream'],
+  
+  // Webpack config to handle pino/thread-stream issues
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Don't resolve 'fs', 'net', etc on client side
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        child_process: false,
+      };
+    }
+    
+    // Ignore pino test files that cause issues
+    config.module = config.module || {};
+    config.module.noParse = [/thread-stream\/test/];
+    
+    return config;
   },
 };
 
