@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import {
   Shield,
   Users,
@@ -14,7 +15,8 @@ import {
   XCircle,
   Loader2,
   Copy,
-  ExternalLink
+  ExternalLink,
+  ArrowLeft
 } from 'lucide-react';
 import { useAccount, useWriteContract, useReadContract, useWaitForTransactionReceipt } from 'wagmi';
 import { SupplyChainABI, CONTRACT_ADDRESS, ROLES } from '@/lib/contracts/SupplyChainABI';
@@ -24,6 +26,7 @@ import toast from 'react-hot-toast';
 type RoleKey = keyof typeof ROLES;
 
 export default function AdminPage() {
+  const router = useRouter();
   const { address, isConnected } = useAccount();
   const [selectedRole, setSelectedRole] = useState<RoleKey>('MANUFACTURER_ROLE');
   const [targetAddress, setTargetAddress] = useState('');
@@ -253,6 +256,13 @@ export default function AdminPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
+          <button
+            onClick={() => router.back()}
+            className="flex items-center gap-2 text-gray-400 hover:text-white mb-4 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back
+          </button>
           <h1 className="text-3xl font-bold mb-2 flex items-center gap-3">
             <Shield className="w-8 h-8 text-primary" />
             Admin Panel
