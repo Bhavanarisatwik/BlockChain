@@ -4,17 +4,16 @@ import { useEffect, useState } from 'react';
 import { useAccount, useReadContract } from 'wagmi';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { 
-  Package, 
-  Boxes, 
-  ArrowRightLeft, 
+import {
+  Package,
+  Boxes,
+  ArrowRightLeft,
   FileText,
   Plus,
   TrendingUp,
   Activity
 } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { StatCard } from '@/components/ui/StatCard';
 import { SupplyChainABI, CONTRACT_ADDRESS } from '@/lib/contracts/SupplyChainABI';
 import { formatNumber, formatRelativeTime } from '@/lib/utils';
@@ -47,7 +46,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[var(--background)]">
       <Navbar />
-      
+
       <main className="pt-20 pb-12 px-4">
         <div className="mx-auto max-w-7xl">
           {/* Header */}
@@ -254,8 +253,6 @@ export default function DashboardPage() {
           </motion.div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
