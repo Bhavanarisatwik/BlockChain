@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Shield, 
-  Users, 
-  Plus, 
-  Trash2, 
+import {
+  Shield,
+  Users,
+  Plus,
+  Trash2,
   Pause,
   Play,
   AlertTriangle,
@@ -30,16 +30,24 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<'roles' | 'contract'>('roles');
 
   // Contract read operations
-  const { data: isAdmin, isLoading: isAdminLoading, error: adminError } = useReadContract({
+  const { data: isAdmin, isLoading: isAdminLoading, error: adminError, refetch: checkAdmin } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: SupplyChainABI,
     functionName: 'hasRole',
     args: [ROLES.DEFAULT_ADMIN_ROLE, address as `0x${string}`],
+    chainId: 11155111,
     query: { enabled: !!address && !!CONTRACT_ADDRESS }
   });
 
   // Debug logging
-  console.log('Admin check:', { address, CONTRACT_ADDRESS, isAdmin, isAdminLoading, adminError, ROLES });
+  console.log('Admin Page Debug:', {
+    connectedAddress: address,
+    contractAddress: CONTRACT_ADDRESS,
+    isAdmin,
+    isAdminLoading,
+    adminError,
+    expectedAdminRole: ROLES.DEFAULT_ADMIN_ROLE
+  });
 
   const { data: isPaused } = useReadContract({
     address: CONTRACT_ADDRESS,
@@ -116,7 +124,7 @@ export default function AdminPage() {
         targetAddress,
         contractAddress: CONTRACT_ADDRESS,
       });
-      
+
       assignRole({
         address: CONTRACT_ADDRESS as `0x${string}`,
         abi: SupplyChainABI,
@@ -143,7 +151,7 @@ export default function AdminPage() {
         targetAddress,
         contractAddress: CONTRACT_ADDRESS,
       });
-      
+
       removeRole({
         address: CONTRACT_ADDRESS as `0x${string}`,
         abi: SupplyChainABI,
@@ -236,6 +244,12 @@ export default function AdminPage() {
             <p className="text-sm text-gray-500 mt-2">
               Connected: {truncateAddress(address || '')}
             </p>
+            <button
+              onClick={() => checkAdmin()}
+              className="mt-4 px-4 py-2 bg-dark-lighter hover:bg-dark-light rounded-lg text-sm transition-colors"
+            >
+              Retry Check
+            </button>
           </div>
         </div>
       </div>
@@ -273,13 +287,13 @@ export default function AdminPage() {
                 <code className="text-xs bg-dark-lighter px-2 py-1 rounded">
                   {truncateAddress(CONTRACT_ADDRESS)}
                 </code>
-                <button 
+                <button
                   onClick={() => copyAddress(CONTRACT_ADDRESS)}
                   className="text-gray-400 hover:text-primary transition-colors"
                 >
                   <Copy className="w-4 h-4" />
                 </button>
-                <a 
+                <a
                   href={`https://sepolia.etherscan.io/address/${CONTRACT_ADDRESS}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -290,9 +304,8 @@ export default function AdminPage() {
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
-                isPaused ? 'bg-red-500/20 text-red-400' : 'bg-green-500/20 text-green-400'
-              }`}>
+              <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${isPaused ? 'bg-red-500/20 text-red-400' : 'bg-green-500/20 text-green-400'
+                }`}>
                 {isPaused ? (
                   <>
                     <Pause className="w-4 h-4" />
@@ -340,22 +353,20 @@ export default function AdminPage() {
         <div className="flex gap-2 mb-6">
           <button
             onClick={() => setActiveTab('roles')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
-              activeTab === 'roles' 
-                ? 'bg-primary text-white' 
-                : 'bg-dark-lighter text-gray-400 hover:text-white'
-            }`}
+            className={`px-4 py-2 rounded-lg font-medium transition-all ${activeTab === 'roles'
+              ? 'bg-primary text-white'
+              : 'bg-dark-lighter text-gray-400 hover:text-white'
+              }`}
           >
             <Users className="w-4 h-4 inline mr-2" />
             Role Management
           </button>
           <button
             onClick={() => setActiveTab('contract')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
-              activeTab === 'contract' 
-                ? 'bg-primary text-white' 
-                : 'bg-dark-lighter text-gray-400 hover:text-white'
-            }`}
+            className={`px-4 py-2 rounded-lg font-medium transition-all ${activeTab === 'contract'
+              ? 'bg-primary text-white'
+              : 'bg-dark-lighter text-gray-400 hover:text-white'
+              }`}
           >
             <Shield className="w-4 h-4 inline mr-2" />
             Contract Info
@@ -380,11 +391,10 @@ export default function AdminPage() {
                   <button
                     key={role.key}
                     onClick={() => setSelectedRole(role.key)}
-                    className={`w-full p-4 rounded-lg text-left transition-all ${
-                      selectedRole === role.key
-                        ? 'bg-primary/20 border border-primary'
-                        : 'bg-dark-lighter border border-transparent hover:border-gray-700'
-                    }`}
+                    className={`w-full p-4 rounded-lg text-left transition-all ${selectedRole === role.key
+                      ? 'bg-primary/20 border border-primary'
+                      : 'bg-dark-lighter border border-transparent hover:border-gray-700'
+                      }`}
                   >
                     <div className="font-medium">{role.label}</div>
                     <div className="text-sm text-gray-400">{role.description}</div>
@@ -399,7 +409,7 @@ export default function AdminPage() {
                 <Shield className="w-5 h-5 text-primary" />
                 Manage Role
               </h3>
-              
+
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -505,7 +515,7 @@ export default function AdminPage() {
                   <div>
                     <div className="font-medium text-yellow-500">Admin Notice</div>
                     <div className="text-sm text-gray-400 mt-1">
-                      As an administrator, you have full control over the contract including 
+                      As an administrator, you have full control over the contract including
                       pausing operations and managing roles. Use these powers responsibly.
                     </div>
                   </div>

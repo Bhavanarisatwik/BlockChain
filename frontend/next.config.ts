@@ -3,21 +3,21 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Transpile these packages for compatibility
   transpilePackages: ['@rainbow-me/rainbowkit', '@wagmi/connectors', 'viem'],
-  
+
   // Disable strict mode for Web3 compatibility
   reactStrictMode: false,
-  
-  // Ignore TypeScript/ESLint errors during build
+
+  // Ignore TypeScript errors during build
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  
+
+  // Enable Turbopack compatibility
+  turbopack: {},
+
   // Mark problematic packages as external for server
   serverExternalPackages: ['pino', 'pino-pretty', 'thread-stream'],
-  
+
   // Webpack config to handle pino/thread-stream issues
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -30,11 +30,11 @@ const nextConfig: NextConfig = {
         child_process: false,
       };
     }
-    
+
     // Ignore pino test files that cause issues
     config.module = config.module || {};
     config.module.noParse = [/thread-stream\/test/];
-    
+
     return config;
   },
 };

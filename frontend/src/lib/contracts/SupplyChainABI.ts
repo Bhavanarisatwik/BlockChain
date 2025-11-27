@@ -526,7 +526,7 @@ export const SupplyChainABI = [
   }
 ] as const;
 
-export const CONTRACT_ADDRESS = (process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "") as `0x${string}`;
+export const CONTRACT_ADDRESS = "0x071B8e1a406b98ef2c1f869F8e0d83C7C7D73449" as `0x${string}`;
 
 // Role hashes - must match keccak256 of role names in contract
 export const ROLES = {
