@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Boxes, Plus, Search, Filter, Eye, AlertTriangle, CheckCircle, ArrowRightLeft } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { useReadContract, useAccount } from 'wagmi';
 import { readContract } from '@wagmi/core';
 import { config } from '@/lib/wagmi';
@@ -122,17 +121,17 @@ export default function BatchesPage() {
 
   // Filter batches
   const filteredBatches = batches.filter((batch) => {
-    const matchesSearch = 
+    const matchesSearch =
       batch.id.toString().includes(searchQuery) ||
       productNames[batch.productId.toString()]?.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     let matchesFilter = true;
     if (filter === 'mine' && address) {
       matchesFilter = batch.currentOwner.toLowerCase() === address.toLowerCase();
     } else if (filter === 'recalled') {
       matchesFilter = batch.recalled;
     }
-    
+
     return matchesSearch && matchesFilter;
   });
 
@@ -228,11 +227,10 @@ export default function BatchesPage() {
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                    filter === f
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${filter === f
                       ? 'bg-[var(--primary)] text-black'
                       : 'bg-[var(--surface)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] border border-[var(--border)]'
-                  }`}
+                    }`}
                 >
                   {f === 'mine' ? 'My Batches' : f.charAt(0).toUpperCase() + f.slice(1)}
                 </button>
@@ -258,7 +256,7 @@ export default function BatchesPage() {
             >
               <Boxes className="h-16 w-16 text-[var(--text-muted)] mx-auto mb-4" />
               <p className="text-[var(--text-secondary)] mb-4">
-                {searchQuery || filter !== 'all' 
+                {searchQuery || filter !== 'all'
                   ? 'No batches match your criteria'
                   : 'No batches created yet'
                 }
@@ -279,11 +277,10 @@ export default function BatchesPage() {
                 <motion.div
                   key={batch.id.toString()}
                   variants={itemVariants}
-                  className={`bg-[var(--surface)] border rounded-xl p-6 transition-all group hover:border-[var(--primary)]/50 ${
-                    batch.recalled 
-                      ? 'border-[var(--error)]/50' 
+                  className={`bg-[var(--surface)] border rounded-xl p-6 transition-all group hover:border-[var(--primary)]/50 ${batch.recalled
+                      ? 'border-[var(--error)]/50'
                       : 'border-[var(--border)]'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="p-3 rounded-lg bg-[var(--secondary)]/10">
@@ -303,7 +300,7 @@ export default function BatchesPage() {
                       )}
                     </div>
                   </div>
-                  
+
                   <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-1 group-hover:text-[var(--primary)] transition-colors">
                     Batch #{batch.id.toString()}
                   </h3>
@@ -364,8 +361,6 @@ export default function BatchesPage() {
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

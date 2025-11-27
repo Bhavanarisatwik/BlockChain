@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Boxes, ArrowLeft, Loader2, Check, Package } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { TransactionModal } from '@/components/ui/TransactionModal';
 import { useWriteContract, useWaitForTransactionReceipt, useAccount, useReadContract } from 'wagmi';
 import { SupplyChainABI, CONTRACT_ADDRESS } from '@/lib/contracts/SupplyChainABI';
@@ -26,9 +25,9 @@ function NewBatchContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const preselectedProductId = searchParams.get('productId');
-  
+
   const { address, isConnected } = useAccount();
-  
+
   const [formData, setFormData] = useState({
     batchId: '',
     productId: preselectedProductId || '',
@@ -37,7 +36,7 @@ function NewBatchContent() {
     location: '',
     notes: '',
   });
-  
+
   const [showTxModal, setShowTxModal] = useState(false);
   const [txStatus, setTxStatus] = useState<'pending' | 'success' | 'error'>('pending');
   const [txHash, setTxHash] = useState<string | undefined>();
@@ -91,7 +90,7 @@ function NewBatchContent() {
   }, [allProductIds, isLoadingIds]);
 
   const { writeContract, isPending: isWritePending, data: hash } = useWriteContract();
-  
+
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
     query: {
@@ -123,7 +122,7 @@ function NewBatchContent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!isConnected) {
       toast.error('Please connect your wallet');
       return;
@@ -142,12 +141,12 @@ function NewBatchContent() {
 
     try {
       // Generate batch ID if not provided
-      const batchId = formData.batchId 
-        ? BigInt(formData.batchId) 
+      const batchId = formData.batchId
+        ? BigInt(formData.batchId)
         : BigInt(Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 1000));
-      
+
       // Convert manufacture date to timestamp
-      const manufactureDate = formData.manufactureDate 
+      const manufactureDate = formData.manufactureDate
         ? BigInt(Math.floor(new Date(formData.manufactureDate).getTime() / 1000))
         : BigInt(0);
 
@@ -180,8 +179,8 @@ function NewBatchContent() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <Link 
-              href="/batches" 
+            <Link
+              href="/batches"
               className="inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors mb-4"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -348,8 +347,6 @@ function NewBatchContent() {
           }
         }}
       />
-
-      <Footer />
     </div>
   );
 }
@@ -364,7 +361,6 @@ function NewBatchLoading() {
           <Loader2 className="h-8 w-8 animate-spin text-[var(--primary)]" />
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

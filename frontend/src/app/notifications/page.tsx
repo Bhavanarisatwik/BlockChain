@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { Bell, Check, Trash2, ArrowRightLeft, FileText, AlertTriangle, Package, CheckCircle } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { useAppStore } from '@/lib/store';
 import { formatDateTime } from '@/lib/utils';
 import Link from 'next/link';
@@ -45,7 +44,7 @@ export default function NotificationsPage() {
                 Notifications
               </h1>
               <p className="text-[var(--text-secondary)]">
-                {unreadCount > 0 
+                {unreadCount > 0
                   ? `You have ${unreadCount} unread notification${unreadCount > 1 ? 's' : ''}`
                   : 'All caught up!'
                 }
@@ -90,25 +89,23 @@ export default function NotificationsPage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className={`bg-[var(--surface)] border rounded-xl p-4 transition-all ${
-                    notification.read 
-                      ? 'border-[var(--border)]' 
-                      : 'border-[var(--primary)]/50 bg-[var(--primary)]/5'
-                  }`}
+                  className={`bg-[var(--surface)] border rounded-xl p-4 transition-all ${notification.read
+                    ? 'border-[var(--border)]'
+                    : 'border-[var(--primary)]/50 bg-[var(--primary)]/5'
+                    }`}
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-2 rounded-lg bg-[var(--background)]">
                       {getIcon(notification.type)}
                     </div>
-                    
+
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <h3 className={`font-semibold ${
-                            notification.read 
-                              ? 'text-[var(--text-secondary)]' 
-                              : 'text-[var(--text-primary)]'
-                          }`}>
+                          <h3 className={`font-semibold ${notification.read
+                            ? 'text-[var(--text-secondary)]'
+                            : 'text-[var(--text-primary)]'
+                            }`}>
                             {notification.title}
                           </h3>
                           <p className="text-sm text-[var(--text-muted)] mt-1">
@@ -118,7 +115,7 @@ export default function NotificationsPage() {
                             {formatDateTime(notification.timestamp / 1000)}
                           </p>
                         </div>
-                        
+
                         <div className="flex items-center gap-2 flex-shrink-0">
                           {!notification.read && (
                             <button
@@ -183,8 +180,6 @@ export default function NotificationsPage() {
           </motion.div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

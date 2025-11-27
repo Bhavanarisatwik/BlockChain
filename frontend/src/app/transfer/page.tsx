@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRightLeft, ArrowLeft, Loader2, Check, AlertTriangle, Boxes, User } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { TransactionModal } from '@/components/ui/TransactionModal';
 import { useWriteContract, useWaitForTransactionReceipt, useAccount, useReadContract } from 'wagmi';
 import { SupplyChainABI, CONTRACT_ADDRESS } from '@/lib/contracts/SupplyChainABI';
@@ -18,9 +17,9 @@ function TransferContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const preselectedBatchId = searchParams.get('batchId');
-  
+
   const { address, isConnected } = useAccount();
-  
+
   const [formData, setFormData] = useState({
     batchId: preselectedBatchId || '',
     recipient: '',
@@ -28,7 +27,7 @@ function TransferContent() {
     notes: '',
     proof: '',
   });
-  
+
   const [showTxModal, setShowTxModal] = useState(false);
   const [txStatus, setTxStatus] = useState<'pending' | 'success' | 'error'>('pending');
   const [txHash, setTxHash] = useState<string | undefined>();
@@ -83,7 +82,7 @@ function TransferContent() {
   });
 
   const { writeContract, isPending: isWritePending, data: hash } = useWriteContract();
-  
+
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
     query: {
@@ -115,7 +114,7 @@ function TransferContent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!isConnected) {
       toast.error('Please connect your wallet');
       return;
@@ -164,8 +163,8 @@ function TransferContent() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <Link 
-              href="/batches" 
+            <Link
+              href="/batches"
               className="inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors mb-4"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -366,8 +365,6 @@ function TransferContent() {
           }
         }}
       />
-
-      <Footer />
     </div>
   );
 }
@@ -382,7 +379,6 @@ function TransferLoading() {
           <Loader2 className="h-8 w-8 animate-spin text-[var(--primary)]" />
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

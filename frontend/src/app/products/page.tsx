@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Package, Plus, Search, Filter, ExternalLink, Eye, Trash2, Loader2 } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { useReadContract, useAccount } from 'wagmi';
 import { SupplyChainABI, CONTRACT_ADDRESS } from '@/lib/contracts/SupplyChainABI';
 import { formatDateTime, truncateAddress, ipfsToHttp } from '@/lib/utils';
@@ -72,10 +71,10 @@ export default function ProductsPage() {
 
   // Filter products
   const filteredProducts = products.filter((product) => {
-    const matchesSearch = 
+    const matchesSearch =
       product.metaURI.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.manufacturer.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     return matchesSearch;
   });
 
@@ -151,7 +150,7 @@ export default function ProductsPage() {
             >
               <Package className="h-16 w-16 text-[var(--text-muted)] mx-auto mb-4" />
               <p className="text-[var(--text-secondary)] mb-4">
-                {searchQuery 
+                {searchQuery
                   ? 'No products match your search'
                   : 'No products registered yet'}
               </p>
@@ -189,7 +188,7 @@ export default function ProductsPage() {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-[var(--text-muted)]">Created:</span>
@@ -206,7 +205,7 @@ export default function ProductsPage() {
                     </div>
 
                     <div className="mt-4 pt-4 border-t border-[var(--border)] flex gap-2">
-                      <Link 
+                      <Link
                         href={`/products/${product.id}`}
                         className="btn-secondary flex-1 text-center text-sm"
                       >
@@ -221,8 +220,6 @@ export default function ProductsPage() {
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }

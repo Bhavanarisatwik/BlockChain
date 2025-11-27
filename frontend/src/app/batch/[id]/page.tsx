@@ -4,12 +4,11 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { 
-  Boxes, ArrowLeft, ArrowRightLeft, FileText, Upload, AlertTriangle, 
-  CheckCircle, Thermometer, ExternalLink, Loader2, Check 
+import {
+  Boxes, ArrowLeft, ArrowRightLeft, FileText, Upload, AlertTriangle,
+  CheckCircle, Thermometer, ExternalLink, Loader2, Check
 } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { Timeline } from '@/components/ui/Timeline';
 import { QRCode } from '@/components/ui/QRCode';
 import { TransactionModal } from '@/components/ui/TransactionModal';
@@ -62,7 +61,7 @@ export default function BatchDetailPage() {
 
   // Write contracts
   const { writeContract, isPending: isWritePending, data: hash } = useWriteContract();
-  
+
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
     query: {
@@ -219,8 +218,8 @@ export default function BatchDetailPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <Link 
-              href="/batches" 
+            <Link
+              href="/batches"
               className="inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors mb-4"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -483,7 +482,7 @@ export default function BatchDetailPage() {
             <h2 className="text-xl font-bold text-[var(--text-primary)] mb-6">
               Attach Document
             </h2>
-            
+
             <div className="space-y-4 mb-6">
               <div>
                 <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
@@ -569,7 +568,7 @@ export default function BatchDetailPage() {
             <p className="text-[var(--text-secondary)] mb-4">
               Warning: This action cannot be undone. The batch will be permanently marked as recalled.
             </p>
-            
+
             <div className="mb-6">
               <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
                 Recall Reason *
@@ -625,8 +624,6 @@ export default function BatchDetailPage() {
           setTxStatus('pending');
         }}
       />
-
-      <Footer />
     </div>
   );
 }

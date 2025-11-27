@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Package, ArrowLeft, Upload, Loader2, Check, X } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { TransactionModal } from '@/components/ui/TransactionModal';
 import { useWriteContract, useWaitForTransactionReceipt, useAccount } from 'wagmi';
 import { SupplyChainABI, CONTRACT_ADDRESS } from '@/lib/contracts/SupplyChainABI';
@@ -31,7 +30,7 @@ interface ProductMetadata {
 export default function NewProductPage() {
   const router = useRouter();
   const { address, isConnected } = useAccount();
-  
+
   const [formData, setFormData] = useState({
     productId: '',
     name: '',
@@ -43,7 +42,7 @@ export default function NewProductPage() {
     specifications: [{ key: '', value: '' }],
     certifications: [''],
   });
-  
+
   const [images, setImages] = useState<File[]>([]);
   const [isUploadingMetadata, setIsUploadingMetadata] = useState(false);
   const [showTxModal, setShowTxModal] = useState(false);
@@ -51,7 +50,7 @@ export default function NewProductPage() {
   const [txHash, setTxHash] = useState<string | undefined>();
 
   const { writeContract, isPending: isWritePending, data: hash } = useWriteContract();
-  
+
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
     hash,
     query: {
@@ -129,7 +128,7 @@ export default function NewProductPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!isConnected) {
       toast.error('Please connect your wallet');
       return;
@@ -176,8 +175,8 @@ export default function NewProductPage() {
       setIsUploadingMetadata(false);
 
       // Generate product ID if not provided
-      const productId = formData.productId 
-        ? BigInt(formData.productId) 
+      const productId = formData.productId
+        ? BigInt(formData.productId)
         : BigInt(Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 1000));
 
       // Call smart contract
@@ -209,8 +208,8 @@ export default function NewProductPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <Link 
-              href="/products" 
+            <Link
+              href="/products"
               className="inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors mb-4"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -497,8 +496,6 @@ export default function NewProductPage() {
           }
         }}
       />
-
-      <Footer />
     </div>
   );
 }

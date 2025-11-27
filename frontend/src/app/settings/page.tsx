@@ -2,12 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Settings as SettingsIcon, Bell, Moon, Sun, Globe, Wallet, 
-  Save, Check, Loader2 
+import {
+  Settings as SettingsIcon, Bell, Moon, Sun, Globe, Wallet,
+  Save, Check, Loader2
 } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { useAccount } from 'wagmi';
 import { useAppStore } from '@/lib/store';
 import toast from 'react-hot-toast';
@@ -15,7 +14,7 @@ import toast from 'react-hot-toast';
 export default function SettingsPage() {
   const { address, isConnected } = useAccount();
   const { notifications, setNotifications, clearNotifications } = useAppStore();
-  
+
   const [settings, setSettings] = useState({
     emailNotifications: true,
     pushNotifications: true,
@@ -99,7 +98,7 @@ export default function SettingsPage() {
               <Wallet className="h-5 w-5 text-[var(--primary)]" />
               Wallet
             </h2>
-            
+
             {isConnected ? (
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -141,7 +140,7 @@ export default function SettingsPage() {
                 </button>
               )}
             </div>
-            
+
             <div className="space-y-4">
               <ToggleRow
                 label="Email Notifications"
@@ -187,7 +186,7 @@ export default function SettingsPage() {
               <Moon className="h-5 w-5 text-[var(--accent)]" />
               Appearance
             </h2>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
@@ -204,11 +203,10 @@ export default function SettingsPage() {
                       <button
                         key={theme.value}
                         onClick={() => handleSelect('theme', theme.value)}
-                        className={`flex-1 p-3 rounded-lg border flex items-center justify-center gap-2 transition-all ${
-                          settings.theme === theme.value
-                            ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]'
-                            : 'border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--primary)]/50'
-                        }`}
+                        className={`flex-1 p-3 rounded-lg border flex items-center justify-center gap-2 transition-all ${settings.theme === theme.value
+                          ? 'border-[var(--primary)] bg-[var(--primary)]/10 text-[var(--primary)]'
+                          : 'border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--primary)]/50'
+                          }`}
                       >
                         <Icon className="h-4 w-4" />
                         {theme.label}
@@ -231,7 +229,7 @@ export default function SettingsPage() {
               <Globe className="h-5 w-5 text-[var(--primary)]" />
               Preferences
             </h2>
-            
+
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-[var(--text-secondary)] mb-2">
@@ -300,22 +298,20 @@ export default function SettingsPage() {
           </motion.div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
 
 // Toggle Row Component
-function ToggleRow({ 
-  label, 
-  description, 
-  checked, 
-  onChange 
-}: { 
-  label: string; 
-  description: string; 
-  checked: boolean; 
+function ToggleRow({
+  label,
+  description,
+  checked,
+  onChange
+}: {
+  label: string;
+  description: string;
+  checked: boolean;
   onChange: () => void;
 }) {
   return (
@@ -326,14 +322,12 @@ function ToggleRow({
       </div>
       <button
         onClick={onChange}
-        className={`relative w-12 h-6 rounded-full transition-all ${
-          checked ? 'bg-[var(--primary)]' : 'bg-[var(--border)]'
-        }`}
+        className={`relative w-12 h-6 rounded-full transition-all ${checked ? 'bg-[var(--primary)]' : 'bg-[var(--border)]'
+          }`}
       >
         <span
-          className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${
-            checked ? 'left-7' : 'left-1'
-          }`}
+          className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${checked ? 'left-7' : 'left-1'
+            }`}
         />
       </button>
     </div>

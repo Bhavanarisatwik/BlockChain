@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Search, QrCode, ArrowRight, CheckCircle, AlertTriangle, Boxes, FileText, ArrowRightLeft } from 'lucide-react';
 import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
 import { QRScanner } from '@/components/ui/QRScanner';
 import { QRCode } from '@/components/ui/QRCode';
 import { Timeline } from '@/components/ui/Timeline';
@@ -81,7 +80,7 @@ export default function VerifyPage() {
     }] : []),
   ].sort((a, b) => a.timestamp - b.timestamp) : [];
 
-  const verificationUrl = searchedBatchId 
+  const verificationUrl = searchedBatchId
     ? `${typeof window !== 'undefined' ? window.location.origin : ''}/verify?batch=${searchedBatchId}`
     : '';
 
@@ -184,11 +183,10 @@ export default function VerifyPage() {
               className="space-y-6"
             >
               {/* Verification Status */}
-              <div className={`rounded-xl p-6 border ${
-                provenance[0].recalled 
-                  ? 'bg-[var(--error)]/10 border-[var(--error)]/30' 
-                  : 'bg-[var(--accent)]/10 border-[var(--accent)]/30'
-              }`}>
+              <div className={`rounded-xl p-6 border ${provenance[0].recalled
+                ? 'bg-[var(--error)]/10 border-[var(--error)]/30'
+                : 'bg-[var(--accent)]/10 border-[var(--accent)]/30'
+                }`}>
                 <div className="flex items-center gap-4">
                   {provenance[0].recalled ? (
                     <AlertTriangle className="h-10 w-10 text-[var(--error)]" />
@@ -196,13 +194,12 @@ export default function VerifyPage() {
                     <CheckCircle className="h-10 w-10 text-[var(--accent)]" />
                   )}
                   <div>
-                    <h3 className={`text-xl font-bold ${
-                      provenance[0].recalled ? 'text-[var(--error)]' : 'text-[var(--accent)]'
-                    }`}>
+                    <h3 className={`text-xl font-bold ${provenance[0].recalled ? 'text-[var(--error)]' : 'text-[var(--accent)]'
+                      }`}>
                       {provenance[0].recalled ? 'RECALLED' : 'VERIFIED AUTHENTIC'}
                     </h3>
                     <p className="text-[var(--text-secondary)]">
-                      {provenance[0].recalled 
+                      {provenance[0].recalled
                         ? `This batch has been recalled: ${provenance[0].recallReason}`
                         : 'This batch has been verified on the blockchain'
                       }
@@ -324,8 +321,6 @@ export default function VerifyPage() {
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
