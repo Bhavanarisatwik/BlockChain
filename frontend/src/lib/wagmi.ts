@@ -1,17 +1,18 @@
 'use client';
 
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
-import { sepolia, mainnet, polygon, optimism } from 'wagmi/chains';
+import { sepolia, mainnet, polygon, optimism, hardhat } from 'wagmi/chains';
 
 import { http } from 'wagmi';
 
 // Use wagmi's built-in hardhat chain
 export const config = getDefaultConfig({
   appName: 'SupplyChain Provenance',
-  projectId: "5a618e819eec4b9343c215f39dfe4fd7",
-  chains: [sepolia, mainnet, polygon, optimism],
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'demo',
+  chains: [hardhat, sepolia, mainnet, polygon, optimism],
   transports: {
-    [sepolia.id]: http("https://1rpc.io/sepolia"),
+    [hardhat.id]: http("http://127.0.0.1:8545"),
+    [sepolia.id]: http(process.env.NEXT_PUBLIC_RPC_URL),
     [mainnet.id]: http(),
     [polygon.id]: http(),
     [optimism.id]: http(),

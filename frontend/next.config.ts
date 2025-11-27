@@ -20,6 +20,11 @@ const nextConfig: NextConfig = {
 
   // Webpack config to handle pino/thread-stream issues
   webpack: (config, { isServer }) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@react-native-async-storage/async-storage': false,
+    };
+
     if (!isServer) {
       // Don't resolve 'fs', 'net', etc on client side
       config.resolve.fallback = {

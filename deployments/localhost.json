@@ -3,7 +3,7 @@
   "chainId": 31337,
   "contractAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
   "deployerAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-  "deploymentTime": "2025-11-27T17:53:14.991Z",
+  "deploymentTime": "2025-11-27T19:28:18.190Z",
   "transactionHash": "0x57d3ee5cac0e89d960d04a3b2964bc071740e6320f73445212c6ddd238b1f218",
   "roles": {
     "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
