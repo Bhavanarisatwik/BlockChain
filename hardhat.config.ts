@@ -27,7 +27,7 @@ const config: HardhatUserConfig = {
       url: "http://127.0.0.1:8545",
       chainId: 31337,
     },
-    ...(SEPOLIA_RPC_URL && PRIVATE_KEY !== "0x0000000000000000000000000000000000000000000000000000000000000001" ? {
+    ...(SEPOLIA_RPC_URL && PRIVATE_KEY.length === 66 ? {
       sepolia: {
         url: SEPOLIA_RPC_URL,
         accounts: [PRIVATE_KEY],

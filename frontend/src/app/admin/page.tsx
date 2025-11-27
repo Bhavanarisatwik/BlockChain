@@ -35,7 +35,6 @@ export default function AdminPage() {
     abi: SupplyChainABI,
     functionName: 'hasRole',
     args: [ROLES.DEFAULT_ADMIN_ROLE, address as `0x${string}`],
-    chainId: 11155111,
     query: { enabled: !!address && !!CONTRACT_ADDRESS }
   });
 
@@ -239,17 +238,6 @@ export default function AdminPage() {
         <div className="max-w-4xl mx-auto">
           <div className="card text-center py-16">
             <XCircle className="w-16 h-16 mx-auto mb-4 text-red-500" />
-            <h2 className="text-2xl font-bold mb-2">Access Denied</h2>
-            <p className="text-gray-400">You do not have admin privileges for this contract</p>
-            <p className="text-sm text-gray-500 mt-2">
-              Connected: {truncateAddress(address || '')}
-            </p>
-            <button
-              onClick={() => checkAdmin()}
-              className="mt-4 px-4 py-2 bg-dark-lighter hover:bg-dark-light rounded-lg text-sm transition-colors"
-            >
-              Retry Check
-            </button>
           </div>
         </div>
       </div>

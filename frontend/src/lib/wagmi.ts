@@ -12,7 +12,7 @@ export const config = getDefaultConfig({
   chains: [hardhat, sepolia, mainnet, polygon, optimism],
   transports: {
     [hardhat.id]: http("http://127.0.0.1:8545"),
-    [sepolia.id]: http(process.env.NEXT_PUBLIC_RPC_URL),
+    [sepolia.id]: http(process.env.NEXT_PUBLIC_RPC_URL || "https://1rpc.io/sepolia"),
     [mainnet.id]: http(),
     [polygon.id]: http(),
     [optimism.id]: http(),
