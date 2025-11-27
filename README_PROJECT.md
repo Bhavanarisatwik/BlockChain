@@ -104,42 +104,56 @@ Update the `.env` files with your:
 - MongoDB connection string
 - NFT.Storage API key
 
-### 3. Start Local Blockchain
+### 3. Local Development Setup
 
+#### Step A: Start Local Blockchain
+Open a terminal and run:
 ```bash
-# Terminal 1: Start Hardhat node
 npx hardhat node
 ```
+*Keep this terminal running!* It will show you a list of 20 accounts with 10,000 ETH each.
 
-### 4. Deploy Contracts
-
+#### Step B: Deploy Smart Contract
+Open a **second terminal** and run:
 ```bash
-# Terminal 2: Deploy to localhost
 npx hardhat run scripts/deploy.ts --network localhost
 ```
-
-Note the deployed contract address and update your `.env` files.
-
-### 5. Start Indexer
-
-```bash
-# Terminal 3: Start MongoDB (if using local)
-mongod
-
-# Start indexer
-cd indexer
-npm run dev
+Copy the deployed **Contract Address** from the output and update your `frontend/.env.local` file:
+```env
+NEXT_PUBLIC_CONTRACT_ADDRESS=your_deployed_address_here
 ```
 
-### 6. Start Frontend
+#### Step C: Configure MetaMask
+1.  **Add Network:**
+    - Network Name: `Localhost 8545`
+    - RPC URL: `http://127.0.0.1:8545`
+    - Chain ID: `31337`
+    - Currency Symbol: `ETH`
+2.  **Import Account:**
+    - Copy the **Private Key** of Account #0 from the `npx hardhat node` terminal.
+    - In MetaMask: Click Circle Icon -> Import Account -> Paste Private Key.
+3.  **Reset Account (Important):**
+    - If you restart the node, you must reset your MetaMask account to clear old transaction history.
+    - Settings -> Advanced -> Clear activity tab data.
 
+#### Step D: Start Frontend
+Open a **third terminal** and run:
 ```bash
-# Terminal 4: Start Next.js
 cd frontend
 npm run dev
 ```
+Visit `http://localhost:3000` and connect your imported wallet.
 
-Visit `http://localhost:3000`
+#### Step E: Start Indexer (Optional)
+If you want to track events in a database:
+```bash
+# Start MongoDB
+mongod
+
+# Start Indexer
+cd indexer
+npm run dev
+```
 
 ## 📜 Smart Contract
 
